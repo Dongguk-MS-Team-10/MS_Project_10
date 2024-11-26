@@ -10,5 +10,8 @@ data class Meal(
     val place: String,
     val foodName: String,
     val cost: Int,
-    val review: String
+    val review: String,
+    val date: String,
+    val type: String,
+    val imageUri: String
 )

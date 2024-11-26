@@ -25,10 +25,21 @@ fun MealListScreen(
     viewModel: MealViewModel,
     onMealClick: (Int) -> Unit,     // 특정 식사를 클릭했을 때의 이벤트
     onAddMealClick: () -> Unit,      // 식사 추가 버튼 클릭 이벤트
+    onAnalysisClick: () -> Unit,     // 식단 분석 버튼 클릭 이벤트
     meals: List<Meal>              // 실제 식사 데이터를 리스트로 전달
 
 ) {
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+        // 식단 분석 버튼
+        Button(
+            onClick = onAnalysisClick,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = "식단 분석")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         // 식사 추가 버튼
         Button(
             onClick = onAddMealClick,
@@ -82,6 +93,7 @@ fun MealItem(
         Column {
             Text(text = meal.foodName, style = MaterialTheme.typography.bodyLarge)
             Text(text = meal.place, style = MaterialTheme.typography.bodySmall)
+            Text(text = meal.date, style = MaterialTheme.typography.bodySmall)
         }
         Text(text = "${meal.cost}원", style = MaterialTheme.typography.bodySmall)
     }
