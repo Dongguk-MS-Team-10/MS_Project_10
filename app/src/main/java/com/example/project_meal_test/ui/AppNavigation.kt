@@ -1,0 +1,54 @@
+package com.example.project_meal_test.ui
+
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import com.example.project_meal_test.data.Meal
+import com.example.project_meal_test.ui.screen.AddMealScreen
+import com.example.project_meal_test.ui.screen.AnalysisScreen
+import com.example.project_meal_test.ui.screen.MealDetailScreen
+import com.example.project_meal_test.ui.screen.MealListScreen
+import com.example.project_meal_test.viewmodel.MealViewModel
+
+@Composable
+fun AppNavigation(navController: NavHostController, viewModel: MealViewModel) {
+    NavHost(
+        navController = navController,
+        startDestination = "meal_list" // 시작 화면
+    ) {
+        // 식사 리스트 화면
+        composable("meal_list") {
+            MealListScreen(
+                viewModel = viewModel,
+                onMealClick = { mealId ->
+                navController.navigate("meal_detail/$mealId")
+            }, onAddMealClick = {
+                navController.navigate("add_meal")
+            },
+                meals = listOf(
+                    Meal(1, "상록원 2층", "비빔밥", 6000, "맛있어요!"),
+                    Meal(2, "기숙사 식당", "된장찌개", 5000, "짭짤하다")
+                )
+            )
+        }
+
+        // 식사 입력 화면
+        composable("add_meal") {
+            AddMealScreen(viewModel)
+        }
+
+        // 식사 상세 화면
+        composable("meal_detail/{mealId}") { backStackEntry ->
+            val mealId = backStackEntry.arguments?.getString("mealId")?.toIntOrNull()
+            mealId?.let {
+                MealDetailScreen(mealId = it)
+            }
+        }
+
+        // 식사 분석 화면
+        composable("analysis") {
+            AnalysisScreen()
+        }
+    }
+}
