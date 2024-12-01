@@ -11,7 +11,13 @@ interface MealDao {
 
 
     @Query("SELECT * FROM Meal WHERE date >= :startDate")
-    fun getMealsFromDate(startDate: LocalDate): Flow<List<Meal>>
+    fun getMealsFromDate(startDate: String): Flow<List<Meal>>
+
+    @Query("SELECT SUM(cost) FROM Meal WHERE date >= :startDate")
+    fun getTotalCostSince(startDate: String): Flow<Int?>
+
+    @Query("SELECT SUM(cost) FROM Meal WHERE type = :mealType AND date >= :startDate")
+    fun getTotalCostByTypeSince(mealType: String, startDate: String): Flow<Int?>
 
     @Query("SELECT * FROM Meal WHERE id = :id")
     fun getMealById(id: Int): Flow<Meal>

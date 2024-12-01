@@ -210,11 +210,11 @@ fun AddMealScreen(
                     onValueChange = { imageUrl = it },
                     label = { Text("사진 URL 입력") },
                     keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Text,
                         imeAction = ImeAction.Done
                     ),
                     modifier = Modifier.fillMaxWidth()
                 )
+
             } else if (imageResourcesForPlace.isNotEmpty()) {
                 // 미리 준비된 이미지들 중에서 선택
                 Text(text = "사진 선택", style = MaterialTheme.typography.titleMedium)
@@ -250,7 +250,7 @@ fun AddMealScreen(
                     try {
                         // 사용자가 직접 입력한 장소를 사용할 경우 customPlace 사용
                         val placeToSave = if (selectedPlace == "기타") customPlace.text else selectedPlace
-                        val imageUriToSave = if (selectedPlace == "기타") imageUrl.text else selectedImage?.toString()
+                        val imageUriToSave = if (selectedPlace == "기타" || selectedPlace == "기숙사 식당") imageUrl.text else selectedImage?.toString()
 
                         if (!imageUriToSave.isNullOrEmpty()) {
                             viewModel.addMeal(
@@ -261,7 +261,8 @@ fun AddMealScreen(
                                     review = review.text,
                                     date = date.text,
                                     type = selectedType,
-                                    imageUri = imageUriToSave
+                                    imageUri = imageUriToSave,
+                                    calories = viewModel.getRandomCalories() // 랜덤 칼로리 값
                                 )
                             )
                             // 성공적으로 저장 시 로그 출력
