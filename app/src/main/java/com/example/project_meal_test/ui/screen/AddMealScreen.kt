@@ -84,6 +84,7 @@ fun AddMealScreen(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
+            Spacer(modifier = Modifier.height(20.dp))
             // 식사 장소 제목
             Text(text = "식사 장소", style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.height(8.dp))

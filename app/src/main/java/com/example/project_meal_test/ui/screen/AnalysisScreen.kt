@@ -31,19 +31,19 @@ fun AnalysisScreen(viewModel: MealViewModel = viewModel()) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(20.dp)
+            .padding(16.dp)
     ) {
+        Spacer(modifier = Modifier.height(40.dp))
         // 큰 글씨
         Text(
             text = "최근 1달 간의 식단 분석",
-            fontSize = 32.sp,
+            fontSize = 34.sp,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(60.dp))
 
         // 총 비용 및 총 칼로리 섹션
         Card(
@@ -59,20 +59,20 @@ fun AnalysisScreen(viewModel: MealViewModel = viewModel()) {
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 Text(
-                    text = "섭취한 비용 총량: $totalCost 원",
-                    fontSize = 22.sp,
+                    text = "지출한 총비용: $totalCost 원",
+                    fontSize = 23.sp,
                     fontWeight = FontWeight.Medium
                 )
 
                 Text(
                     text = "칼로리 총량 : $totalCalories kcal",
-                    fontSize = 22.sp,
+                    fontSize = 23.sp,
                     fontWeight = FontWeight.Medium
                 )
             }
         }
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(100.dp))
 
         // 종류별 식사 비용 섹션
         Text(
@@ -82,6 +82,8 @@ fun AnalysisScreen(viewModel: MealViewModel = viewModel()) {
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.padding(start = 8.dp)
         )
+
+        Spacer(modifier = Modifier.height(30.dp))
 
         Card(
             modifier = Modifier
@@ -97,25 +99,25 @@ fun AnalysisScreen(viewModel: MealViewModel = viewModel()) {
             ) {
                 Text(
                     text = "조식: $breakfastCost 원",
-                    fontSize = 20.sp,
+                    fontSize = 21.sp,
                     fontWeight = FontWeight.Normal,
                     color = Color(0xFF6A1B9A)
                 )
                 Text(
                     text = "중식: $lunchCost 원",
-                    fontSize = 20.sp,
+                    fontSize = 21.sp,
                     fontWeight = FontWeight.Normal,
                     color = Color(0xFF2E7D32)
                 )
                 Text(
                     text = "석식: $dinnerCost 원",
-                    fontSize = 20.sp,
+                    fontSize = 21.sp,
                     fontWeight = FontWeight.Normal,
                     color = Color(0xFFD84315)
                 )
                 Text(
                     text = "간식/음료: $snackCost 원",
-                    fontSize = 20.sp,
+                    fontSize = 21.sp,
                     fontWeight = FontWeight.Normal,
                     color = Color(0xFF0288D1)
                 )

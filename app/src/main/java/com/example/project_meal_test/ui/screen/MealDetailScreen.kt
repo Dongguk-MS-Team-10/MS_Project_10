@@ -47,6 +47,7 @@ fun MealDetailScreen(mealId: Int, viewModel: MealViewModel = viewModel()) {
             verticalArrangement = Arrangement.spacedBy(20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Spacer(modifier = Modifier.height(20.dp))
             // 이미지 로드 로직
             val imageUri = meal.imageUri
 
@@ -155,31 +156,31 @@ fun MealDetailScreen(mealId: Int, viewModel: MealViewModel = viewModel()) {
             ) {
                 Text(
                     text = "음식 : ${meal.foodName}",
-                    fontSize = 24.sp,
+                    fontSize = 28.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black
                 )
                 Text(
                     text = "식당 : ${meal.place}",
-                    fontSize = 20.sp,
+                    fontSize = 22.sp,
                     color = Color.Gray,
                     fontWeight = FontWeight.SemiBold
                 )
                 Text(
                     text = "종류 : ${meal.type}",
-                    fontSize = 20.sp,
+                    fontSize = 22.sp,
                     color = Color.Gray,
                     fontWeight = FontWeight.SemiBold
                 )
                 Text(
                     text = "비용 : ${meal.cost}원",
-                    fontSize = 20.sp,
+                    fontSize = 22.sp,
                     color = Color.Gray,
                     fontWeight = FontWeight.SemiBold
                 )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
             // 추가 정보 - 날짜, 소감, 칼로리량
             Column(
@@ -192,20 +193,20 @@ fun MealDetailScreen(mealId: Int, viewModel: MealViewModel = viewModel()) {
             ) {
                 Text(
                     text = "날짜 : ${meal.date}",
-                    fontSize = 18.sp,
+                    fontSize = 19.sp,
                     color = Color.DarkGray,
                     fontWeight = FontWeight.Medium
                 )
                 Text(
                     text = "소감 : ${meal.review}",
-                    fontSize = 18.sp,
+                    fontSize = 19.sp,
                     color = Color.Black,
                     lineHeight = 28.sp,
                     fontWeight = FontWeight.Medium
                 )
                 Text(
                     text = "칼로리량 : ${meal.calories} Kcal",
-                    fontSize = 18.sp,
+                    fontSize = 19.sp,
                     color = Color.DarkGray,
                     fontWeight = FontWeight.Medium
                 )
