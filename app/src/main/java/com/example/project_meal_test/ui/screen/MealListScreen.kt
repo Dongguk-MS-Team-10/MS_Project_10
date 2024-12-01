@@ -9,6 +9,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.LineHeightStyle
@@ -18,6 +20,7 @@ import androidx.compose.ui.unit.sp
 // 데이터 모델
 import com.example.project_meal_test.data.Meal
 import com.example.project_meal_test.viewmodel.MealViewModel
+import kotlinx.coroutines.flow.Flow
 
 
 @Composable
@@ -26,10 +29,12 @@ fun MealListScreen(
     onMealClick: (Int) -> Unit,     // 특정 식사를 클릭했을 때의 이벤트
     onAddMealClick: () -> Unit,      // 식사 추가 버튼 클릭 이벤트
     onAnalysisClick: () -> Unit,     // 식단 분석 버튼 클릭 이벤트
-    meals: List<Meal>              // 실제 식사 데이터를 리스트로 전달
+    meals: Flow<List<Meal>>              // 실제 식사 데이터를 리스트로 전달
 
 ) {
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+        val mealList by meals.collectAsState(initial = emptyList())
+
         // 식단 분석 버튼
         Button(
             onClick = onAnalysisClick,
@@ -51,7 +56,7 @@ fun MealListScreen(
         Spacer(modifier = Modifier.height(16.dp)) // 간격 추가
 
         // 식사 리스트
-        if (meals.isEmpty()) {
+        if (mealList.isEmpty()) {
             // 데이터가 없을 때 표시
             Text(
                 text = "등록된 식사가 없습니다.",
@@ -69,7 +74,7 @@ fun MealListScreen(
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
             ) {
-                items(meals) { meal ->
+                items(mealList) { meal ->
                     MealItem(meal = meal, onClick = { onMealClick(meal.id) })
                 }
             }
@@ -93,7 +98,8 @@ fun MealItem(
         Column {
             Text(text = meal.foodName, style = MaterialTheme.typography.bodyLarge)
             Text(text = meal.place, style = MaterialTheme.typography.bodySmall)
-            Text(text = meal.date, style = MaterialTheme.typography.bodySmall)
+            Text(text = meal.date.toString(),
+                style = MaterialTheme.typography.bodySmall)
         }
         Text(text = "${meal.cost}원", style = MaterialTheme.typography.bodySmall)
     }

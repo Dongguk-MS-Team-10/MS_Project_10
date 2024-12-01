@@ -3,6 +3,7 @@ package com.example.project_meal_test.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.time.LocalDate
 
 @Entity
 data class Meal(
@@ -11,7 +12,7 @@ data class Meal(
     val foodName: String,
     val cost: Int,
     val review: String,
-    val date: String,
+    var date: String,
     val type: String,
     val imageUri: String
 )
