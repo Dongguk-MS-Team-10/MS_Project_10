@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         // 앱 시작 시 데이터베이스 파일 삭제
-        deleteDatabase("meal_database")
+//        deleteDatabase("meal_database")
 
         // ViewModel 생성
         val viewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application)).get(MealViewModel::class.java)

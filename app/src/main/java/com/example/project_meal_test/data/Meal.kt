@@ -14,5 +14,6 @@ data class Meal(
     val review: String,
     var date: String,
     val type: String,
-    val imageUri: String
+    val imageUri: String,
+    val calories: Int
 )
