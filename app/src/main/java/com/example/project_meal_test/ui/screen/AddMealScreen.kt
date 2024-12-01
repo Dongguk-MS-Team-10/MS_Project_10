@@ -3,9 +3,7 @@ package com.example.project_meal_test.ui.screen
 import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,11 +21,21 @@ fun AddMealScreen(
     navController: NavController,
     viewModel: MealViewModel = viewModel()
 ) {
-    var place by remember { mutableStateOf(TextFieldValue("")) }
+    // 식사 장소 선택 변수
+    var selectedPlace by remember { mutableStateOf("") }
+    var expandedPlace by remember { mutableStateOf(false) }
+
+    // 종류 선택 변수
+    var selectedType by remember { mutableStateOf("") }
+    var expandedType by remember { mutableStateOf(false) }
+
+    // 드롭다운 메뉴에 사용할 장소 리스트
+    val places = listOf("상록원 2층", "상록원 3층", "기숙사 식당")
+    val types = listOf("조식", "중식", "석식", "간식/음료")
+
     var foodName by remember { mutableStateOf(TextFieldValue("")) }
     var review by remember { mutableStateOf(TextFieldValue("")) }
     var date by remember { mutableStateOf(TextFieldValue("")) }
-    var type by remember { mutableStateOf(TextFieldValue("")) }
     var cost by remember { mutableStateOf(TextFieldValue("")) }
     var imageUri by remember { mutableStateOf(TextFieldValue("")) }
 
@@ -36,25 +44,64 @@ fun AddMealScreen(
             .fillMaxSize(), // 부모 크기만큼 Box 확장
         contentAlignment = Alignment.TopCenter // Box 내부에서 내용 상단 중앙 정렬
     ) {
-        Column(modifier = Modifier.padding(top = 100.dp)) {
-            TextField(
-                value = place,
-                onValueChange = { place = it },
-                label = { Text("식사 장소") },
-                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
-            )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            // 식사 장소 제목
+            Text(text = "식사 장소", style = MaterialTheme.typography.titleMedium)
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // 드롭다운 메뉴로 식사 장소 선택
+            Box(modifier = Modifier.fillMaxWidth()) {
+                OutlinedButton(
+                    onClick = { expandedPlace = true },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = if (selectedPlace.isEmpty()) "식사 장소 선택" else selectedPlace)
+                }
+                DropdownMenu(
+                    expanded = expandedPlace,
+                    onDismissRequest = { expandedPlace = false }
+                ) {
+                    places.forEach { place ->
+                        DropdownMenuItem(
+                            text = { Text(place) },
+                            onClick = {
+                                selectedPlace = place
+                                expandedPlace = false
+                            }
+                        )
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // 음식 이름 텍스트 필드
             TextField(
                 value = foodName,
                 onValueChange = { foodName = it },
                 label = { Text("음식 이름") },
-                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
+                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
+                modifier = Modifier.fillMaxWidth()
             )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // 소감 텍스트 필드
             TextField(
                 value = review,
                 onValueChange = { review = it },
                 label = { Text("소감") },
-                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
+                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
+                modifier = Modifier.fillMaxWidth()
             )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // 날짜 텍스트 필드
             TextField(
                 value = date,
                 onValueChange = { date = it },
@@ -62,17 +109,43 @@ fun AddMealScreen(
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Done
-                )
+                ),
+                modifier = Modifier.fillMaxWidth()
             )
-            TextField(
-                value = type,
-                onValueChange = { type = it },
-                label = { Text("종류 (조식, 중식, 석식, 간식/음료)") },
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Done
-                )
-            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // 종류 제목
+            Text(text = "종류", style = MaterialTheme.typography.titleMedium)
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // 드롭다운 메뉴로 종류 선택
+            Box(modifier = Modifier.fillMaxWidth()) {
+                OutlinedButton(
+                    onClick = { expandedType = true },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = if (selectedType.isEmpty()) "종류 선택" else selectedType)
+                }
+                DropdownMenu(
+                    expanded = expandedType,
+                    onDismissRequest = { expandedType = false }
+                ) {
+                    types.forEach { type ->
+                        DropdownMenuItem(
+                            text = { Text(type) },
+                            onClick = {
+                                selectedType = type
+                                expandedType = false
+                            }
+                        )
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // 비용 텍스트 필드
             TextField(
                 value = cost,
                 onValueChange = { cost = it },
@@ -80,11 +153,13 @@ fun AddMealScreen(
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done
-                )
+                ),
+                modifier = Modifier.fillMaxWidth()
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // 사진 URL 텍스트 필드
             TextField(
                 value = imageUri,
                 onValueChange = { imageUri = it },
@@ -92,7 +167,8 @@ fun AddMealScreen(
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Done
-                )
+                ),
+                modifier = Modifier.fillMaxWidth()
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -103,12 +179,12 @@ fun AddMealScreen(
                     try {
                         viewModel.addMeal(
                             Meal(
-                                place = place.text,
+                                place = selectedPlace,
                                 foodName = foodName.text,
                                 cost = cost.text.toIntOrNull() ?: 0,
                                 review = review.text,
                                 date = date.text,
-                                type = type.text,
+                                type = selectedType,
                                 imageUri = imageUri.text
                             )
                         )
@@ -123,7 +199,9 @@ fun AddMealScreen(
                         Log.e("AddMealScreen", "Error saving meal: ${e.message}", e)
                     }
                 },
-                modifier = Modifier.width(280.dp)
+                modifier = Modifier
+                    .width(280.dp)
+                    .align(Alignment.CenterHorizontally)
             ) {
                 Text("저장하기")
             }
@@ -136,7 +214,9 @@ fun AddMealScreen(
                     // MealListScreen으로 이동
                     navController.navigate("meal_list")
                 },
-                modifier = Modifier.width(280.dp)
+                modifier = Modifier
+                    .width(280.dp)
+                    .align(Alignment.CenterHorizontally)
             ) {
                 Text("목록으로 돌아가기")
             }
