@@ -15,10 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.project_meal_test.R
@@ -26,6 +28,7 @@ import com.example.project_meal_test.data.Meal
 import com.example.project_meal_test.viewmodel.MealViewModel
 import java.util.Calendar
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddMealScreen(
     navController: NavController,
@@ -74,6 +77,16 @@ fun AddMealScreen(
         month,
         day
     )
+    TopAppBar(
+        title = { Text(text = "식사 추가", style = MaterialTheme.typography.titleLarge.copy(
+            fontSize = 25.sp, // 글씨 크기 설정
+            fontWeight = FontWeight.Bold
+        ) ) },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.onPrimary
+        )
+    )
     Box(
         modifier = Modifier
             .fillMaxSize(), // 부모 크기만큼 Box 확장
@@ -84,7 +97,7 @@ fun AddMealScreen(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(65.dp))
             // 식사 장소 제목
             Text(text = "식사 장소", style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.height(8.dp))
