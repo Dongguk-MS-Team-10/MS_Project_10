@@ -8,14 +8,23 @@ import com.example.project_meal_test.ui.screen.AddMealScreen
 import com.example.project_meal_test.ui.screen.AnalysisScreen
 import com.example.project_meal_test.ui.screen.MealDetailScreen
 import com.example.project_meal_test.ui.screen.MealListScreen
+import com.example.project_meal_test.ui.screen.SplashScreen
 import com.example.project_meal_test.viewmodel.MealViewModel
 
 @Composable
 fun AppNavigation(navController: NavHostController, viewModel: MealViewModel) {
     NavHost(
         navController = navController,
-        startDestination = "meal_list" // 시작 화면
+        startDestination = "splash_list" // 시작 화면
     ) {
+
+        composable("splash_list") {
+            SplashScreen(onTimeout = {
+                navController.navigate("meal_list") {
+                    popUpTo("splash") { inclusive = true }
+                }
+            })
+        }
         // 식사 리스트 화면
         composable("meal_list") {
             MealListScreen(
