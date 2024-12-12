@@ -9,7 +9,6 @@ interface MealDao {
     @Query("SELECT * FROM Meal ORDER BY date DESC")
     fun getAllMeals(): Flow<List<Meal>>
 
-
     @Query("SELECT * FROM Meal WHERE date >= :startDate")
     fun getMealsFromDate(startDate: String): Flow<List<Meal>>
 
